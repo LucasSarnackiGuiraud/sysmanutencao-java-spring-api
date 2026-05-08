@@ -32,7 +32,7 @@ public class Equipamento {
         this.statusEquipamento = true;
     }
 
-    public Long getId() {return id;}
+    public Long getIdEquipamento() {return id;}
 
     public CategoriaEquipamentos getCategoriaEquipamento() {return  categoriaEquipamento;}
 
