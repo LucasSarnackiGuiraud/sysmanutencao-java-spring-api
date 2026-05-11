@@ -4,10 +4,13 @@ import com.lucas.sysmanutencao.dto.OrdemServicoRequestDTO;
 import com.lucas.sysmanutencao.dto.StatusOrdemRequestDTO;
 import com.lucas.sysmanutencao.entity.Equipamento;
 import com.lucas.sysmanutencao.entity.OrdemServico;
+import com.lucas.sysmanutencao.exception.BussinessExcepetion;
+import com.lucas.sysmanutencao.exception.ResourceNotFoundException;
 import com.lucas.sysmanutencao.repository.EquipamentoRepository;
 import com.lucas.sysmanutencao.repository.OrdemServicoRepository;
 import org.springframework.stereotype.Service;
 
+import java.lang.module.ResolutionException;
 import java.util.List;
 
 @Service
@@ -25,10 +28,10 @@ public class OrdemServicoService {
 
     public OrdemServico cadastrarOrdemServico(OrdemServicoRequestDTO dto) {
         Equipamento equipamento = equipamentoRepository.findById(dto.getEquipamentoId())
-                .orElseThrow(() -> new RuntimeException("Equipamento não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Equipamento não encontrado"));
 
         if (!equipamento.isStatusEquipamento()) {
-            throw new RuntimeException("Não é possível abrir OS para equipamento inativo");
+            throw new BussinessExcepetion("Não é possível abrir OS para equipamento inativo");
         }
 
         OrdemServico ordemServico = new OrdemServico(
@@ -46,7 +49,7 @@ public class OrdemServicoService {
 
     public OrdemServico buscarOrdemServicoPorId(Long id) {
         return ordemServicoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ordem não encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Ordem não encontrada"));
     }
 
     public OrdemServico alterarStatus(Long id, StatusOrdemRequestDTO dto) {

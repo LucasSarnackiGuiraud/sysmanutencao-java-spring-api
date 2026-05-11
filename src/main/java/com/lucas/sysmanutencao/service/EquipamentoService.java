@@ -3,6 +3,7 @@ package com.lucas.sysmanutencao.service;
 
 import com.lucas.sysmanutencao.dto.EquipamentoRequestDTO;
 import com.lucas.sysmanutencao.entity.Equipamento;
+import com.lucas.sysmanutencao.exception.ResourceNotFoundException;
 import com.lucas.sysmanutencao.repository.EquipamentoRepository;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ public class EquipamentoService {
     }
 
     public Equipamento buscaIdEquipamento(Long id) {
-        return equipamentoRepository.findById(id).orElseThrow(()-> new RuntimeException("Equipamento não encontrado"));
+        return equipamentoRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Equipamento não encontrado"));
     }
 
     public Equipamento inativarEquipamento(Long id) {
