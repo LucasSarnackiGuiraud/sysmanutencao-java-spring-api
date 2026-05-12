@@ -2,10 +2,10 @@ package com.lucas.sysmanutencao.controller;
 
 
 import com.lucas.sysmanutencao.dto.OrdemServicoRequestDTO;
+import com.lucas.sysmanutencao.dto.OrdemServicoResponseDTO;
 import com.lucas.sysmanutencao.dto.StatusOrdemRequestDTO;
-import com.lucas.sysmanutencao.entity.OrdemServico;
-import com.lucas.sysmanutencao.repository.OrdemServicoRepository;
 import com.lucas.sysmanutencao.service.OrdemServicoService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,22 +21,22 @@ public class OrdemServicoController {
     }
 
     @PostMapping
-    public OrdemServico salvar(@RequestBody OrdemServicoRequestDTO dto) {
+    public OrdemServicoResponseDTO salvar(@RequestBody @Valid OrdemServicoRequestDTO dto) {
         return ordemServicoService.cadastrarOrdemServico(dto);
     }
 
     @GetMapping
-    public List<OrdemServico> listar() {
+    public List<OrdemServicoResponseDTO> listar() {
         return ordemServicoService.listarOrdemServico();
     }
 
     @GetMapping("/{id}")
-    public OrdemServico buscarOrdemServicoPorId(@PathVariable long id) {
-        return ordemServicoService.buscarOrdemServicoPorId(id);
+    public OrdemServicoResponseDTO buscarOrdemServicoPorId(@PathVariable long id) {
+        return ordemServicoService.buscarOrdemServico(id);
     }
 
-    @PutMapping("/{id}/trocar-status-ordem")
-    public OrdemServico trocarStatusOrdemServicoPorId(
+    @PutMapping("/{id}/status")
+    public OrdemServicoResponseDTO trocarStatusOrdemServicoPorId(
             @PathVariable Long id,
             @RequestBody StatusOrdemRequestDTO dto) {
         return ordemServicoService.alterarStatus(id, dto);

@@ -1,11 +1,11 @@
 package com.lucas.sysmanutencao.exception;
 
 
-public class BussinessExcepetion extends RuntimeException{
+public class BusinessExcepetion extends RuntimeException{
 
     private static final long serialVersionUID = 1L;
 
-    public BussinessExcepetion(String mensage){
+    public BusinessExcepetion(String mensage){
         super(mensage);
     }
 }

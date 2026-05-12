@@ -2,7 +2,7 @@ package com.lucas.sysmanutencao.controller;
 
 
 import com.lucas.sysmanutencao.dto.EquipamentoRequestDTO;
-import com.lucas.sysmanutencao.entity.Equipamento;
+import com.lucas.sysmanutencao.dto.EquipamentoResponseDTO;
 import com.lucas.sysmanutencao.service.EquipamentoService;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
@@ -21,27 +21,27 @@ public class EquipamentoController {
     }
 
     @PostMapping
-    public Equipamento salvar(@RequestBody @Valid EquipamentoRequestDTO dto) {
+    public EquipamentoResponseDTO salvar(@RequestBody @Valid EquipamentoRequestDTO dto) {
         return equipamentoService.cadastrarEquipamento(dto);
     }
 
     @GetMapping
-    public List<Equipamento> listar() {
+    public List<EquipamentoResponseDTO> listar() {
         return equipamentoService.listarEquipamentos();
     }
 
     @GetMapping("/{id}")
-    public Equipamento buscarEquipamentoPorId(@PathVariable long id) {
+    public EquipamentoResponseDTO buscarEquipamentoPorId(@PathVariable long id) {
         return equipamentoService.buscaIdEquipamento(id);
     }
 
     @PutMapping("/{id}/inativar")
-    public Equipamento inativar(@PathVariable long id) {
+    public EquipamentoResponseDTO inativar(@PathVariable long id) {
         return equipamentoService.inativarEquipamento(id);
     }
 
     @PutMapping("/{id}/ativar")
-    public Equipamento ativar(@PathVariable long id) {
+    public EquipamentoResponseDTO ativar(@PathVariable long id) {
         return equipamentoService.ativarEquipamento(id);
     }
 }

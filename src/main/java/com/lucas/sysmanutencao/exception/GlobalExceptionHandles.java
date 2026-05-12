@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -25,8 +24,8 @@ public class GlobalExceptionHandles{
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(BussinessExcepetion.class)
-    public ResponseEntity<ErrorResponseDTO> handleBusinessException(BussinessExcepetion ex, WebRequest request) {
+    @ExceptionHandler(BusinessExcepetion.class)
+    public ResponseEntity<ErrorResponseDTO> handleBusinessException(BusinessExcepetion ex, WebRequest request) {
         ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
                 HttpStatus.BAD_REQUEST.value(),
                 "Bad Request",
