@@ -1,16 +1,16 @@
-# 🛠️ SysManutenção
+# 🛠️ SysManutenção API
 
-Sistema de gerenciamento de manutenção desenvolvido em **Java**, com foco em praticar **Programação Orientada a Objetos**, organização de projeto, uso de `enum`, `services`, validações e relacionamento entre classes.
+API REST para gerenciamento de equipamentos e ordens de serviço, desenvolvida com **Java** e **Spring Boot**.
 
-O projeto simula um sistema interno para cadastro de equipamentos e abertura de ordens de serviço, permitindo controlar equipamentos cadastrados, categorias, status, prioridade e operações básicas diretamente pelo terminal.
+O projeto simula um sistema de manutenção onde é possível cadastrar equipamentos, ativar/inativar equipamentos, abrir ordens de serviço, listar registros, buscar por ID, alterar status de ordens e visualizar a documentação da API com Swagger/OpenAPI.
 
 ---
 
 ## 🎯 Objetivo do Projeto
 
-O objetivo do **SysManutenção** é aplicar conceitos fundamentais de Java em um problema próximo de um cenário real: o controle de manutenção de equipamentos.
+O objetivo do **SysManutenção API** é aplicar conceitos de desenvolvimento backend com Java e Spring Boot em um cenário próximo de um sistema real de manutenção.
 
-Este projeto foi criado como parte do meu processo de aprendizado em Java, servindo como base para uma futura evolução para uma **API REST com Spring Boot**, banco de dados e frontend.
+Este projeto é uma evolução da versão inicial em Java puro no terminal, agora utilizando uma arquitetura baseada em API REST, camadas bem definidas, DTOs, validações, persistência em banco H2 e documentação automática com Swagger.
 
 ---
 
@@ -18,48 +18,55 @@ Este projeto foi criado como parte do meu processo de aprendizado em Java, servi
 
 - ✅ Cadastro de equipamentos
 - ✅ Listagem de equipamentos
-- ✅ Inativação e reativação de equipamentos
+- ✅ Busca de equipamento por ID
+- ✅ Ativação de equipamento
+- ✅ Inativação de equipamento
 - ✅ Cadastro de ordens de serviço
 - ✅ Listagem de ordens de serviço
+- ✅ Busca de ordem de serviço por ID
 - ✅ Alteração de status da ordem de serviço
-- ✅ Uso de categorias para equipamentos
-- ✅ Uso de prioridades para ordens de serviço
-- ✅ Uso de status para controle das ordens
-- ✅ Geração automática de ID
-- ✅ Registro de data de cadastro e abertura
-- ✅ Validações básicas de entrada
-- ✅ Organização do projeto em camadas
+- ✅ Relacionamento entre ordem de serviço e equipamento
+- ✅ Validação de dados com Bean Validation
+- ✅ Tratamento de erros personalizado
+- ✅ Uso de DTOs para entrada e saída de dados
+- ✅ Documentação da API com Swagger/OpenAPI
+- ✅ Banco de dados em memória com H2
 
 ---
 
 ## 🧰 Tecnologias Utilizadas
 
-- Java
-- Programação Orientada a Objetos
-- ArrayList
-- Enum
-- LocalDate
-- Scanner
+- Java 17
+- Spring Boot
+- Spring Web
+- Spring Data JPA
+- Hibernate
+- H2 Database
+- Bean Validation
+- Swagger/OpenAPI
+- Maven
 - Git e GitHub
 
 ---
 
 ## 📚 Conceitos Aplicados
 
-Durante o desenvolvimento foram aplicados conceitos importantes de Java, como:
+Durante o desenvolvimento foram aplicados conceitos importantes de backend com Java, como:
 
-- Classes e objetos
-- Encapsulamento
-- Construtores
-- Getters e setters
-- Métodos estáticos
-- Enum
-- Tratamento de exceções
-- Listas com ArrayList
-- Separação de responsabilidades
-- Organização por pacotes
-- Relacionamento entre objetos
-- Sobrescrita do método `toString()`
+- API REST
+- Controllers
+- Services
+- Repositories
+- Entities
+- DTOs
+- Validação de dados
+- Tratamento global de exceções
+- Relacionamento entre entidades
+- Persistência com JPA/Hibernate
+- Enums
+- Injeção de dependência
+- Organização em camadas
+- Documentação com Swagger
 
 ---
 
@@ -67,26 +74,48 @@ Durante o desenvolvimento foram aplicados conceitos importantes de Java, como:
 
 ```text
 src/
-└── com/
-    └── lucas/
-        └── sysmanutencao/
-            ├── Main.java
-            ├── model/
-            │   ├── Equipamento.java
-            │   ├── OrdemServico.java
-            │   ├── CategoriaEquipamento.java
-            │   ├── PrioridadeOrdem.java
-            │   └── StatusOrdem.java
-            ├── service/
-            │   ├── EquipamentoService.java
-            │   └── OrdemServicoService.java
-            └── util/
-                └── InputUtil.java
+└── main/
+    ├── java/
+    │   └── com/
+    │       └── lucas/
+    │           └── sysmanutencao/
+    │               ├── SysmanutencaoApplication.java
+    │               ├── config/
+    │               │   └── OpenApiConfig.java
+    │               ├── controller/
+    │               │   ├── EquipamentoController.java
+    │               │   └── OrdemServicoController.java
+    │               ├── dto/
+    │               │   ├── EquipamentoRequestDTO.java
+    │               │   ├── EquipamentoResponseDTO.java
+    │               │   ├── OrdemServicoRequestDTO.java
+    │               │   ├── OrdemServicoResponseDTO.java
+    │               │   ├── StatusOrdemRequestDTO.java
+    │               │   └── ErrorResponseDTO.java
+    │               ├── entity/
+    │               │   ├── Equipamento.java
+    │               │   └── OrdemServico.java
+    │               ├── enums/
+    │               │   ├── CategoriaEquipamentos.java
+    │               │   ├── PrioridadeOrdem.java
+    │               │   └── StatusOrdem.java
+    │               ├── exception/
+    │               │   ├── BusinessException.java
+    │               │   ├── ResourceNotFoundException.java
+    │               │   └── GlobalExceptionHandler.java
+    │               ├── repository/
+    │               │   ├── EquipamentoRepository.java
+    │               │   └── OrdemServicoRepository.java
+    │               └── service/
+    │                   ├── EquipamentoService.java
+    │                   └── OrdemServicoService.java
+    └── resources/
+        └── application.properties
 ```
 
 ---
 
-## 🧱 Models
+## 🧱 Entidades
 
 ### 🔧 Equipamento
 
@@ -95,7 +124,7 @@ Representa um equipamento cadastrado no sistema.
 Principais atributos:
 
 ```text
-idEquipamento
+id
 nomeEquipamento
 categoriaEquipamento
 dataCadastroEquipamento
@@ -112,26 +141,27 @@ Principais atributos:
 
 ```text
 idOrdemServico
-equipamentoOrdem
 descricaoProblema
 statusOrdemServico
 prioridadeOrdemServico
 dataAberturaOrdemServico
+equipamento
 ```
 
 ---
 
 ## 🧩 Enums
 
-O projeto utiliza `enum` para evitar o uso de textos soltos no sistema e reduzir erros de digitação.
+O projeto utiliza `enum` para evitar valores inválidos e manter os dados padronizados.
 
-### 🗂️ CategoriaEquipamento
+### 🗂️ CategoriaEquipamentos
 
 Exemplo:
 
 ```java
 NOTEBOOK,
 COMPUTADOR,
+CELULAR,
 IMPRESSORA,
 MONITOR,
 OUTRO
@@ -160,11 +190,120 @@ CANCELADA
 
 ---
 
+## 🌐 Endpoints da API
+
+### 🔧 Equipamentos
+
+| Método | Endpoint | Descrição |
+|---|---|---|
+| POST | `/equipamentos` | Cadastra um novo equipamento |
+| GET | `/equipamentos` | Lista todos os equipamentos |
+| GET | `/equipamentos/{id}` | Busca um equipamento por ID |
+| PUT | `/equipamentos/{id}/inativar` | Inativa um equipamento |
+| PUT | `/equipamentos/{id}/ativar` | Ativa um equipamento |
+
+---
+
+### 📋 Ordens de Serviço
+
+| Método | Endpoint | Descrição |
+|---|---|---|
+| POST | `/ordens-servico` | Abre uma nova ordem de serviço |
+| GET | `/ordens-servico` | Lista todas as ordens de serviço |
+| GET | `/ordens-servico/{id}` | Busca uma ordem de serviço por ID |
+| PUT | `/ordens-servico/{id}/status` | Altera o status de uma ordem de serviço |
+
+---
+
+## 🧪 Exemplos de Requisições
+
+### Criar equipamento
+
+```http
+POST /equipamentos
+```
+
+```json
+{
+  "nomeEquipamento": "Notebook Dell",
+  "categoriaEquipamento": "NOTEBOOK"
+}
+```
+
+---
+
+### Criar ordem de serviço
+
+```http
+POST /ordens-servico
+```
+
+```json
+{
+  "equipamentoId": 1,
+  "descricaoProblema": "Tela não liga",
+  "prioridadeOrdem": "ALTA"
+}
+```
+
+---
+
+### Alterar status da ordem
+
+```http
+PUT /ordens-servico/1/status
+```
+
+```json
+{
+  "statusOrdem": "EM_ANDAMENTO"
+}
+```
+
+---
+
+## 📖 Documentação Swagger
+
+A API possui documentação automática com Swagger/OpenAPI.
+
+Após iniciar a aplicação, acesse:
+
+```text
+http://localhost:8080/swagger-ui/index.html
+```
+
+No Swagger é possível visualizar e testar todos os endpoints da API.
+
+---
+
+## 🗄️ Banco de Dados H2
+
+O projeto utiliza banco de dados H2 em memória para testes e desenvolvimento.
+
+Após iniciar a aplicação, acesse:
+
+```text
+http://localhost:8080/h2-console
+```
+
+Configurações padrão:
+
+```text
+JDBC URL: jdbc:h2:mem:sysmanutencao
+User Name: sa
+Password:
+```
+
+---
+
 ## ▶️ Como Executar
 
-### ✅ Pré-requisitos
+### Pré-requisitos
 
-É necessário ter o Java instalado na máquina.
+É necessário ter instalado:
+
+- Java 17+
+- Maven
 
 Verifique com:
 
@@ -172,111 +311,111 @@ Verifique com:
 java -version
 ```
 
-E também:
+```bash
+mvn -version
+```
+
+---
+
+### Clonar o repositório
 
 ```bash
-javac -version
+git clone https://github.com/LucasSarnackiGuiraud/sysmanutencao-java-spring-api.git
 ```
 
 ---
 
-### 🏗️ Compilar o projeto
-
-Na raiz do projeto, execute:
+### Entrar na pasta do projeto
 
 ```bash
-javac -d out src/com/lucas/sysmanutencao/**/*.java src/com/lucas/sysmanutencao/Main.java
+cd sysmanutencao-java-spring-api
 ```
 
 ---
 
-### 🚀 Executar o projeto
+### Executar a aplicação
+
+Com Maven:
 
 ```bash
-java -cp out com.lucas.sysmanutencao.Main
+mvn spring-boot:run
+```
+
+Ou pelo IntelliJ, execute a classe:
+
+```text
+SysmanutencaoApplication.java
 ```
 
 ---
 
-## 🖥️ Menu do Sistema
+## ✅ Tratamento de Erros
 
-Ao executar o sistema, será exibido um menu no terminal:
+A API possui tratamento personalizado para erros como:
 
-```text
-=== Escolha uma opção ===
-1 - Criar Equipamento
-2 - Listar Equipamentos
-3 - Inativar ou Ativar Equipamento
-4 - Abrir Ordem de Serviço
-5 - Listar Ordens de Serviço
-6 - Trocar o status da Ordem
-0 - Fechar Menu
-```
+- Recurso não encontrado
+- Regra de negócio inválida
+- Erros de validação
 
----
+Exemplo de resposta:
 
-## 🧪 Exemplo de Uso
-
-### Cadastro de equipamento
-
-```text
-Nome do Equipamento: Notebook Dell
-Categoria do Equipamento: NOTEBOOK
-Equipamento cadastrado com sucesso!
-```
-
-### Abertura de ordem de serviço
-
-```text
-Aparelho danificado: Notebook Dell
-Problema danificado: Tela não liga
-Prioridade da ordem: ALTA
-Ordem aberta com sucesso!
+```json
+{
+  "status": 404,
+  "erro": "Recurso não encontrado",
+  "mensagem": "Equipamento não encontrado"
+}
 ```
 
 ---
 
 ## 🚧 Próximas Melhorias
 
-- Criar histórico de alterações da ordem de serviço
-- Impedir abertura de OS para equipamento inativo
-- Impedir inativação de equipamento com OS aberta ou em andamento
-- Melhorar validação de entradas do usuário
-- Criar busca por ID
-- Separar melhor responsabilidades entre `Main` e `Service`
-- Persistir dados em arquivo
-- Migrar para Spring Boot
-- Criar API REST
-- Integrar com banco de dados PostgreSQL
-- Criar frontend com React
-- Adicionar autenticação de usuários
-- Criar documentação com Swagger
+- Persistir dados em PostgreSQL
+- Adicionar migrations com Flyway
+- Criar autenticação com Spring Security e JWT
 - Adicionar testes unitários
+- Adicionar testes de integração
+- Criar histórico de alterações da ordem de serviço
+- Impedir inativação de equipamento com OS aberta ou em andamento
+- Criar paginação e filtros
+- Criar frontend com React
+- Realizar deploy da API
 
 ---
 
-## 📈 Evolução Planejada
+## 📈 Evolução do Projeto
 
-Este projeto será evoluído em etapas:
+Este projeto está sendo desenvolvido em etapas:
 
 ```text
 1. Java puro com terminal
 2. Refatoração com orientação a objetos
-3. Persistência simples
-4. API REST com Spring Boot
-5. Banco de dados PostgreSQL
-6. Frontend com React
-7. Autenticação com JWT
-8. Deploy
+3. Migração para Spring Boot
+4. Criação de API REST
+5. Integração com banco H2
+6. DTOs de entrada e saída
+7. Tratamento de erros
+8. Documentação com Swagger
+9. PostgreSQL
+10. Segurança com JWT
+11. Deploy
 ```
 
 ---
 
 ## 🧠 Aprendizados
 
-Com este projeto, foram praticados conceitos fundamentais para o desenvolvimento backend com Java, principalmente a criação de sistemas orientados a objetos e a organização do código em camadas.
+Com este projeto, foram praticados conceitos fundamentais para desenvolvimento backend com Java e Spring Boot, principalmente:
 
-O projeto também servirá como base para aprender Spring Boot, já que sua estrutura atual já possui separação entre `models`, `services` e utilitários.
+- Criação de APIs REST
+- Organização em camadas
+- Separação entre Entity, DTO, Service, Repository e Controller
+- Persistência de dados com JPA
+- Relacionamento entre entidades
+- Validação de dados
+- Tratamento de exceções
+- Documentação de API com Swagger
 
 ---
 
@@ -284,4 +423,4 @@ O projeto também servirá como base para aprender Spring Boot, já que sua estr
 
 Desenvolvido por **Lucas Guiraud**.
 
-Projeto criado com foco em aprendizado e evolução para backend Java.
+Projeto criado com foco em aprendizado e evolução na área de desenvolvimento backend com Java.
